@@ -36,3 +36,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffunction-sections -fdata-sections")
 
 # Adding modules
 add_subdirectory(reaction-tester)
+
+# Adding microROS
+add_subdirectory(libmicroros)
+include(microros_pico)
