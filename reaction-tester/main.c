@@ -32,6 +32,14 @@ TaskHandle_t buzzerTaskHandler = NULL;
 TaskHandle_t rosPubTaskHandler = NULL;
 TaskHandle_t rosSubTaskHandler = NULL;
 
+/* microROS entities */
+rcl_publisher_t time_publisher;
+rcl_publisher_t best_time_publisher;
+rcl_subscription_t subscriber;
+std_msgs__msg__Int32 reaction_time_to_upload; /* This will hold the reaction time measured each time */
+std_msgs__msg__Int32 best_reaction_time_to_upload; /* This will hold the best reaction time measured if beaten */
+std_msgs__msg__Int32 best_time_to_be_read; /* This will hold the best reaction time read from the remote topic */
+
 /*
 ---------- Function Prototypes ----------
 */
@@ -60,20 +68,45 @@ void led_task(void *pvParameters){
         test_start_time = to_us_since_boot(get_absolute_time());
         /* Now wait over the semaphore that the user presses the button */
         xSemaphoreTake(led_semaphore, portMAX_DELAY);
-        /* As soon as the button is pressed turn the led off and notify the microros publisher by signaling its semaphore */
+        /* As soon as the button is pressed turn the led off and disable interrupts on the button to avoid detecting other clicks */
         gpio_put(LED_PIN, 0);
-        xSemaphoreGive(publisher_semaphore);
+        gpio_set_irq_enabled(BUTTON_PIN, GPIO_IRQ_EDGE_FALL, false);
     }
 }
 
 /* Task that manages the buzzer, making it sound each time the best record is beaten */
 void buzzer_task(void *pvParameters){
-
+    while(1){
+        /* Wait for a "new record" event to occur */
+        xSemaphoreTake(buzzer_semaphore, portMAX_DELAY);
+        /* Make the buzzer sound for 1,5 seconds */
+        for(int i = 0; i < 1500; i++){
+            gpio_put(BUZZER_PIN, 1);
+            vTaskDelay(pdMS_TO_TICKS(1));
+            gpio_put(BUZZER_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(1));
+        }
+    }
 }
 
 /* Task that handles the publishing over microROS topics of both reaction time and best time */
 void ros_publisher_task(void *pvParameters){
-
+    while(1){
+        xSemaphoreTake(publisher_semaphore, portMAX_DELAY);
+        /* Elaborate the value and send it to the respective microROS topic */
+        reaction_time_to_upload.data = reaction_time - test_start_time;
+        rcl_publish(&time_publisher, &reaction_time_to_upload, NULL);
+        /* Once the result has been published check if the result is the best one */
+        if(reaction_time_to_upload.data < best_reaction_time){
+            best_reaction_time = reaction_time_to_upload.data;
+            best_reaction_time_to_upload.data = best_reaction_time;
+            rcl_publish(&best_time_publisher, &best_reaction_time_to_upload, NULL);
+            /* Awake the sleeping buzzer that will need to sound */
+            xSemaphoreGive(buzzer_semaphore);
+            /* The re-awakening of the led task will be performed in the buzzer function if it's called or in this task otherwise */
+            
+        }
+    }
 }
 
 /* Task that handles the reading from the "best times" microROS topic, it is executed just once to get the best score during the first execution */
