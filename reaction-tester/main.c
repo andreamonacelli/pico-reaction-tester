@@ -25,16 +25,17 @@ SemaphoreHandle_t led_semaphore; /* Semaphore that handles the led status' toggl
 SemaphoreHandle_t buzzer_semaphore; /* Semaphore that makes the buzzer wait for the click over the button to perform its checks */
 SemaphoreHandle_t publisher_semaphore; /* Semaphore that makes the publisher wait for the button to be clicked */
 
+/* Task handlers */
+TaskHandle_t ledTaskHandler = NULL;
+TaskHandle_t buzzerTaskHandler = NULL;
+TaskHandle_t rosPubTaskHandler = NULL;
+TaskHandle_t rosSubTaskHandler = NULL;
+
 /*
 ---------- FreeRTOS TASKS DEFINITION ----------
 */
 /* Task that handles the led status */
 void led_task(void *pvParameters){
-
-}
-
-/* Task that manages the click over the button */
-void button_task(void *pvParameters){
 
 }
 
@@ -53,9 +54,47 @@ void ros_subscription_task(void *pvParameters){
 
 }
 
+
+/* Callback function that manages the click over the button */
+void button_callback(void *pvParameters){
+
+}
+
+
 /*
 ---------- MAIN ----------
 */
 int main(){
+    stdio_init_all();
+
+    /* Initializing the led (which will initially be off) */
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
+    gpio_put(LED_PIN, 0);
+
+    /* Initializing the button (using the internal pull-up resistor) */
+    gpio_init(BUTTON_PIN);
+    gpio_set_dir(BUTTON_PIN, GPIO_IN);
+    gpio_pull_up(BUTTON_PIN);
+    gpio_set_irq_enabled_with_callback(BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true, &button_callback);
+
+    /* Initializing the buzzer (which, like the led, will initially be off) */
+    gpio_init(BUZZER_PIN);
+    gpio_set_dir(BUZZER_PIN, GPIO_OUT);
+    gpio_put(BUZZER_PIN, 0);
+
+    /* Initializing the semaphores */
+    led_semaphore = xSemaphoreCreateBinary();
+    buzzer_semaphore = xSemaphoreCreateBinary();
+    publisher_semaphore = xSemaphoreCreateBinary();
+
+    /* FreeRTOS tasks creation */
+    xTaskCreate(led_task, "LED Task", 256, NULL, 1, &ledTaskHandler);
+    xTaskCreate(buzzer_task, "Buzzer Task", 256, NULL, 1, &buzzerTaskHandler);
+    xTaskCreate(ros_publisher_task, "ROS Pub Task", 256, NULL, 1, &rosPubTaskHandler);
+    xTaskCreate(ros_subscription_task, "ROS Sub Task", 256, NULL, 1, &rosSubTaskHandler);
+
+    vTaskStartScheduler();
+    while(1){}
     return 0;
 }
