@@ -35,10 +35,8 @@ pico_sdk_init()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffunction-sections -fdata-sections")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffunction-sections -fdata-sections")
 
+# Adding microROS
+link_directories(libmicroros)
+
 # Adding modules
 add_subdirectory(apps/reaction-tester)
-
-# Adding microROS
-#add_subdirectory(libmicroros)
-#include(microros_pico)
-link_directories(libmicroros)

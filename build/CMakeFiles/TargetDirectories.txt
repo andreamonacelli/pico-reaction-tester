@@ -198,5 +198,7 @@
 /home/andrea/pico/pico-reaction-tester/build/pico-sdk/docs/CMakeFiles/edit_cache.dir
 /home/andrea/pico/pico-reaction-tester/build/pico-sdk/docs/CMakeFiles/rebuild_cache.dir
 /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester/CMakeFiles/reaction-tester.dir
+/home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir
+/home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester/CMakeFiles/picotoolBuild.dir
 /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester/CMakeFiles/edit_cache.dir
 /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester/CMakeFiles/rebuild_cache.dir

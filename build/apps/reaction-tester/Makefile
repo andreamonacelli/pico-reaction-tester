@@ -130,6 +130,34 @@ reaction-tester/fast:
 	cd /home/andrea/pico/pico-reaction-tester/build && $(MAKE) $(MAKESILENT) -f apps/reaction-tester/CMakeFiles/reaction-tester.dir/build.make apps/reaction-tester/CMakeFiles/reaction-tester.dir/build
 .PHONY : reaction-tester/fast
 
+# Convenience name for target.
+apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir/rule:
+	cd /home/andrea/pico/pico-reaction-tester/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir/rule
+.PHONY : apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir/rule
+
+# Convenience name for target.
+picotoolForceReconfigure: apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir/rule
+.PHONY : picotoolForceReconfigure
+
+# fast build rule for target.
+picotoolForceReconfigure/fast:
+	cd /home/andrea/pico/pico-reaction-tester/build && $(MAKE) $(MAKESILENT) -f apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir/build.make apps/reaction-tester/CMakeFiles/picotoolForceReconfigure.dir/build
+.PHONY : picotoolForceReconfigure/fast
+
+# Convenience name for target.
+apps/reaction-tester/CMakeFiles/picotoolBuild.dir/rule:
+	cd /home/andrea/pico/pico-reaction-tester/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 apps/reaction-tester/CMakeFiles/picotoolBuild.dir/rule
+.PHONY : apps/reaction-tester/CMakeFiles/picotoolBuild.dir/rule
+
+# Convenience name for target.
+picotoolBuild: apps/reaction-tester/CMakeFiles/picotoolBuild.dir/rule
+.PHONY : picotoolBuild
+
+# fast build rule for target.
+picotoolBuild/fast:
+	cd /home/andrea/pico/pico-reaction-tester/build && $(MAKE) $(MAKESILENT) -f apps/reaction-tester/CMakeFiles/picotoolBuild.dir/build.make apps/reaction-tester/CMakeFiles/picotoolBuild.dir/build
+.PHONY : picotoolBuild/fast
+
 __/__/FreeRTOS-Kernel/croutine.o: __/__/FreeRTOS-Kernel/croutine.c.o
 .PHONY : __/__/FreeRTOS-Kernel/croutine.o
 
@@ -2218,6 +2246,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... picotoolBuild"
+	@echo "... picotoolForceReconfigure"
 	@echo "... reaction-tester"
 	@echo "... __/__/FreeRTOS-Kernel/croutine.o"
 	@echo "... __/__/FreeRTOS-Kernel/croutine.i"
