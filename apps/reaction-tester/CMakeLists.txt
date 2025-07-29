@@ -3,12 +3,17 @@ add_executable(reaction-tester
     main.c
 )
 
+target_include_directories(reaction-tester PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/libmicroros/include
+)
+
 # Link against Pico, FreeRTOS, microros
 target_link_libraries(reaction-tester
     pico_stdlib
     pico_async_context_freertos
-    microros
     FreeRTOS-Kernel FreeRTOS-Kernel-Heap4
+    ${CMAKE_SOURCE_DIR}/libmicroros/libmicroros.a
 )
 
 # Configure Pico IO settings
