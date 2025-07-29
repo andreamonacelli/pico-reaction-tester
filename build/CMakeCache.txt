@@ -352,15 +352,6 @@ pico-practice_IS_TOP_LEVEL:STATIC=ON
 pico-practice_SOURCE_DIR:STATIC=/home/andrea/pico/pico-reaction-tester
 
 //Value Computed by CMake
-pico_micro_ros_example_BINARY_DIR:STATIC=/home/andrea/pico/pico-reaction-tester/build/libmicroros
-
-//Value Computed by CMake
-pico_micro_ros_example_IS_TOP_LEVEL:STATIC=OFF
-
-//Value Computed by CMake
-pico_micro_ros_example_SOURCE_DIR:STATIC=/home/andrea/pico/pico-reaction-tester/libmicroros
-
-//Value Computed by CMake
 pico_sdk_BINARY_DIR:STATIC=/home/andrea/pico/pico-reaction-tester/build/pico-sdk
 
 //Value Computed by CMake
