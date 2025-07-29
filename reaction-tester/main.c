@@ -15,6 +15,11 @@
 #define BUZZER_PIN 19
 #define BUTTON_PIN 15
 
+/* Button debounce interval */
+//#define DEBOUNCE_MS 30
+/* Global variable used to handle button debouncing */
+//uint32_t last_button_press_time = 0;
+
 /* Global variables */
 uint32_t test_start_time = 0; /* Gets the time at which the test is started (expressed as microseconds from boot), which is the time in which the led is turned on */
 uint32_t led_activation_time = 0; /* This variable represents the time that the led will wait before turning on, its value will be generated randomly each execution (expressed as microseconds from boot) */
@@ -32,13 +37,13 @@ TaskHandle_t buzzerTaskHandler = NULL;
 TaskHandle_t rosPubTaskHandler = NULL;
 TaskHandle_t rosSubTaskHandler = NULL;
 
-/* microROS entities */
+/* microROS entities and message formats */
 rcl_publisher_t time_publisher;
 rcl_publisher_t best_time_publisher;
 rcl_subscription_t subscriber;
 std_msgs__msg__Int32 reaction_time_to_upload; /* This will hold the reaction time measured each time */
 std_msgs__msg__Int32 best_reaction_time_to_upload; /* This will hold the best reaction time measured if beaten */
-std_msgs__msg__Int32 best_time_to_be_read; /* This will hold the best reaction time read from the remote topic */
+std_msgs__msg__Int32 best_reaction_time_to_read; /* This will hold the best reaction time to be read from microROS */
 
 /*
 ---------- Function Prototypes ----------
@@ -46,11 +51,12 @@ std_msgs__msg__Int32 best_time_to_be_read; /* This will hold the best reaction t
 void led_task(void *pvParameters);
 void buzzer_task(void *pvParameters);
 void ros_publisher_task(void *pvParameters);
-void ros_subscription_task(void *pvParameters);
-void button_callback(void *pvParameters);
+void micro_ros_task(void *arg);
+void subscription_callback(const void *msgin);
+void button_callback(uint gpio, uint32_t events);
 
 /*
----------- FreeRTOS TASKS DEFINITION + Callback functions definition ----------
+---------- FreeRTOS TASKS DEFINITION ----------
 */
 /* Task that handles the led status */
 void led_task(void *pvParameters){
@@ -86,6 +92,8 @@ void buzzer_task(void *pvParameters){
             gpio_put(BUZZER_PIN, 0);
             vTaskDelay(pdMS_TO_TICKS(1));
         }
+        /* Re-awaken the led task */
+        xSemaphoreGive(led_semaphore);
     }
 }
 
@@ -94,7 +102,7 @@ void ros_publisher_task(void *pvParameters){
     while(1){
         xSemaphoreTake(publisher_semaphore, portMAX_DELAY);
         /* Elaborate the value and send it to the respective microROS topic */
-        reaction_time_to_upload.data = reaction_time - test_start_time;
+        reaction_time_to_upload.data = reaction_time;
         rcl_publish(&time_publisher, &reaction_time_to_upload, NULL);
         /* Once the result has been published check if the result is the best one */
         if(reaction_time_to_upload.data < best_reaction_time){
@@ -104,27 +112,102 @@ void ros_publisher_task(void *pvParameters){
             /* Awake the sleeping buzzer that will need to sound */
             xSemaphoreGive(buzzer_semaphore);
             /* The re-awakening of the led task will be performed in the buzzer function if it's called or in this task otherwise */
-            
+        } else{
+            xSemaphoreGive(led_semaphore);
         }
     }
 }
 
-/* Task that handles the reading from the "best times" microROS topic, it is executed just once to get the best score during the first execution */
-void ros_subscription_task(void *pvParameters){ 
+/*
+---------- microROS TASKS DEFINITION ----------
+*/
 
+void micro_ros_task(void *arg){
+    rcl_allocator_t allocator = rcl_get_default_allocator();
+    rclc_support_t support;
+
+    /* Create init options */
+    rclc_support_init(&support, 0, NULL, &allocator);
+
+    /* Create microROS node */
+    rcl_node_t node;
+    rclc_node_init_default(&node, "reaction_tester_node", "", &support);
+
+    /* Create subscriber */
+    rclc_subscription_init_default(
+        &subscriber,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        "best_reaction_time_subscriber"
+    );
+
+    /* Create reaction time publisher */
+    rclc_publisher_init_default(
+        &time_publisher,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        "reaction_time_publisher"
+    );
+
+    /* Create best time publisher */
+    rclc_publisher_init_default(
+        &best_time_publisher,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+        "best_reaction_time_publisher"
+    );
+
+    /* Create executor */
+    rclc_executor_t executor;
+    rclc_executor_init(&executor, &support.context, 1, &allocator);
+    rclc_executor_add_subscription(&executor, &subscriber, &best_reaction_time_to_read, &subscription_callback, ON_NEW_DATA);
+
+    /* Spawn timings publisher thread */
+    xTaskCreate(ros_publisher_task, "ROS Pub Task", 512, NULL, 1, &rosPubTaskHandler);
+
+    /* Initialize published message (check if it's actually needed) */
+    reaction_time_to_upload.data = 0;
+
+    while(1){
+		rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+        vTaskDelay(pdMS_TO_TICKS(10));
+	}
+
+    /* Free-ing resources after execution */
+    rcl_subscription_fini(&subscriber, &node);
+    rcl_publisher_fini(&time_publisher, &node);
+    rcl_publisher_fini(&best_time_publisher, &node);
+    rcl_node_fini(&node);
+    vTaskDelete(NULL);
+}
+
+/*
+---------- Callback functions definition ----------
+*/
+
+/* Task that handles the readings from the "best times" microROS topic */
+void subscription_callback(const void *msgin){ 
+    const std_msgs__msg__Int32 *msg = (const std_msgs__msg__Int32 *)msgin;
+    best_reaction_time = msg->data;
 }
 
 
 /* Callback function that manages the click over the button */
-void button_callback(void *pvParameters){
-
+void button_callback(uint gpio, uint32_t events){
+    if(gpio == BUTTON_PIN && (events & GPIO_IRQ_EDGE_FALL)){
+        /* Fetch the time of click and use it to calculate reaction time */
+        uint32_t click_time = to_us_since_boot(get_absolute_time());
+        reaction_time = click_time - test_start_time;
+        /* Unlock the microROS publisher task (which will eventually unlock the led task) */
+        xSemaphoreGive(publisher_semaphore);
+    }
 }
 
 
 /*
 ---------- MAIN ----------
 */
-int main(){
+void main(void){
     stdio_init_all();
 
     /* Initializing the led (which will initially be off) */
@@ -153,10 +236,8 @@ int main(){
     /* FreeRTOS tasks creation */
     xTaskCreate(led_task, "LED Task", 256, NULL, 1, &ledTaskHandler);
     xTaskCreate(buzzer_task, "Buzzer Task", 256, NULL, 1, &buzzerTaskHandler);
-    xTaskCreate(ros_publisher_task, "ROS Pub Task", 256, NULL, 1, &rosPubTaskHandler);
-    xTaskCreate(ros_subscription_task, "ROS Sub Task", 256, NULL, 1, &rosSubTaskHandler);
+    xTaskCreate(micro_ros_task, "microROS Task", 5000, NULL, 1, &rosSubTaskHandler);
 
     vTaskStartScheduler();
     while(1){}
-    return 0;
 }
