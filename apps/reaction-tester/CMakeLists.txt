@@ -12,8 +12,8 @@ target_link_libraries(reaction-tester
 )
 
 # Configure Pico IO settings
-pico_enable_stdio_usb(01_executor_pub 1)
-pico_enable_stdio_uart(01_executor_pub 0)
+pico_enable_stdio_usb(reaction-tester 1)
+pico_enable_stdio_uart(reaction-tester 0)
 
 # Generate UF2 and binary outputs
 pico_add_extra_outputs(reaction-tester)

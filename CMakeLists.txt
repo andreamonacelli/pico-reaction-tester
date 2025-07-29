@@ -20,6 +20,7 @@ endif()
 # Include FreeRTOS header directories.
 include_directories(
     ${CMAKE_SOURCE_DIR}  # This ensures FreeRTOSConfig.h is found
+    ${CMAKE_SOURCE_DIR}/libmicroros/include # microros
 )
 
 # If you want debug output from USB (pass -DPICO_STDIO_USB=1) this ensures you don't lose any debug output while USB is set up
@@ -35,8 +36,9 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffunction-sections -fdata-sections")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffunction-sections -fdata-sections")
 
 # Adding modules
-add_subdirectory(reaction-tester)
+add_subdirectory(apps/reaction-tester)
 
 # Adding microROS
-add_subdirectory(libmicroros)
-include(microros_pico)
+#add_subdirectory(libmicroros)
+#include(microros_pico)
+link_directories(libmicroros)

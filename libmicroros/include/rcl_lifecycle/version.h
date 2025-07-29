@@ -21,15 +21,15 @@
 
 /// \def RCL_LIFECYCLE_VERSION_MINOR
 /// Defines RCL_LIFECYCLE minor version number
-#define RCL_LIFECYCLE_VERSION_MINOR (4)
+#define RCL_LIFECYCLE_VERSION_MINOR (2)
 
 /// \def RCL_LIFECYCLE_VERSION_PATCH
 /// Defines RCL_LIFECYCLE version patch number
-#define RCL_LIFECYCLE_VERSION_PATCH (1)
+#define RCL_LIFECYCLE_VERSION_PATCH (6)
 
 /// \def RCL_LIFECYCLE_VERSION_STR
 /// Defines RCL_LIFECYCLE version string
-#define RCL_LIFECYCLE_VERSION_STR "9.4.1"
+#define RCL_LIFECYCLE_VERSION_STR "9.2.6"
 
 /// \def RCL_LIFECYCLE_VERSION_GTE
 /// Defines a macro to check whether the version of RCL_LIFECYCLE is greater than or equal to

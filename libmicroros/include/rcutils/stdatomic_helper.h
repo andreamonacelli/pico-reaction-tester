@@ -27,7 +27,7 @@
 # endif
 #endif
 
-#if !defined(_WIN32) || defined(__MINGW64__)
+#if !defined(_WIN32)
 
 // The my__has_feature avoids a preprocessor error when you check for it and
 // use it on the same line below.
