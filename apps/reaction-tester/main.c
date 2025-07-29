@@ -138,7 +138,7 @@ void micro_ros_task(void *arg){
         &subscriber,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-        "best_reaction_time_subscriber"
+        "best_reaction_time"
     );
 
     /* Create reaction time publisher */
@@ -146,7 +146,7 @@ void micro_ros_task(void *arg){
         &time_publisher,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-        "reaction_time_publisher"
+        "reaction_time"
     );
 
     /* Create best time publisher */
@@ -154,7 +154,7 @@ void micro_ros_task(void *arg){
         &best_time_publisher,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-        "best_reaction_time_publisher"
+        "best_reaction_time"
     );
 
     /* Create executor */
