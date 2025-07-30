@@ -59,6 +59,9 @@ apps/reaction-tester/CMakeFiles/reaction-tester.dir/main.c.o: \
  /home/andrea/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/resets.h \
  /home/andrea/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/resets.h \
  /home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
+ /home/andrea/pico/pico-sdk/src/rp2_common/hardware_pwm/include/hardware/pwm.h \
+ /home/andrea/pico/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/pwm.h \
+ /home/andrea/pico/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/pwm.h \
  /home/andrea/pico/pico-reaction-tester/FreeRTOS-Kernel/include/FreeRTOS.h \
  /home/andrea/pico/pico-reaction-tester/FreeRTOS-Kernel/include/projdefs.h \
  /home/andrea/pico/pico-reaction-tester/FreeRTOS-Kernel/include/portable.h \

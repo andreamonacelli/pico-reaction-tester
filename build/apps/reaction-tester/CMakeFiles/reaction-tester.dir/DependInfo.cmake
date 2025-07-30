@@ -158,6 +158,7 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
   "/home/andrea/pico/pico-sdk/src/rp2040/boot_stage2/include"
   "/home/andrea/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/include"
   "/home/andrea/pico/pico-sdk/src/rp2_common/hardware_exception/include"
+  "/home/andrea/pico/pico-sdk/src/rp2_common/hardware_pwm/include"
   )
 
 # The set of dependency files which are needed:

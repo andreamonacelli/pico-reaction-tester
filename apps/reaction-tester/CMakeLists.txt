@@ -10,6 +10,7 @@ target_link_libraries(reaction-tester
     pico_stdlib
     FreeRTOS-Kernel FreeRTOS-Kernel-Heap4
     microros
+    hardware_pwm
 )
 
 # Configure Pico IO settings
