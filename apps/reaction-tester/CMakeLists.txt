@@ -7,7 +7,7 @@ add_executable(reaction-tester
 target_link_libraries(reaction-tester
     pico_stdlib
     FreeRTOS-Kernel FreeRTOS-Kernel-Heap4
-    micro_ros
+    microros
 )
 
 # Configure Pico IO settings
