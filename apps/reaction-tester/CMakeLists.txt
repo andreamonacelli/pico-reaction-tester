@@ -1,6 +1,7 @@
 # Defining the executable
 add_executable(reaction-tester
     main.c
+    clock_gettime_patch.c
 )
 
 add_definitions(-DRCUTILS_NO_CLOCK_GETTIME)
@@ -15,6 +16,12 @@ target_link_libraries(reaction-tester
 # Configure Pico IO settings
 pico_enable_stdio_usb(reaction-tester 1)
 pico_enable_stdio_uart(reaction-tester 0)
+
+
+target_sources(${PROJECT_NAME}
+  PRIVATE
+    clock_gettime_patch.c
+)
 
 # Compile definitions for Pico config
 target_compile_definitions(reaction-tester PRIVATE
