@@ -83,19 +83,19 @@ apps/reaction-tester/CMakeFiles/reaction-tester.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/reaction-tester.dir/main.c.s"
 	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrea/pico/pico-reaction-tester/apps/reaction-tester/main.c -o CMakeFiles/reaction-tester.dir/main.c.s
 
-apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o: apps/reaction-tester/CMakeFiles/reaction-tester.dir/flags.make
-apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o: /home/andrea/pico/pico-reaction-tester/apps/reaction-tester/clock_gettime_patch.c
-apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o: apps/reaction-tester/CMakeFiles/reaction-tester.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrea/pico/pico-reaction-tester/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o"
-	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o -MF CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o.d -o CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o -c /home/andrea/pico/pico-reaction-tester/apps/reaction-tester/clock_gettime_patch.c
+apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o: apps/reaction-tester/CMakeFiles/reaction-tester.dir/flags.make
+apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o: /home/andrea/pico/pico-reaction-tester/pico_uart_transport.c
+apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o: apps/reaction-tester/CMakeFiles/reaction-tester.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrea/pico/pico-reaction-tester/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o"
+	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o -MF CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o.d -o CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o -c /home/andrea/pico/pico-reaction-tester/pico_uart_transport.c
 
-apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.i"
-	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrea/pico/pico-reaction-tester/apps/reaction-tester/clock_gettime_patch.c > CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.i
+apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.i"
+	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrea/pico/pico-reaction-tester/pico_uart_transport.c > CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.i
 
-apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.s"
-	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrea/pico/pico-reaction-tester/apps/reaction-tester/clock_gettime_patch.c -o CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.s
+apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.s"
+	cd /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrea/pico/pico-reaction-tester/pico_uart_transport.c -o CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.s
 
 apps/reaction-tester/CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: apps/reaction-tester/CMakeFiles/reaction-tester.dir/flags.make
 apps/reaction-tester/CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o: /home/andrea/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c
@@ -1363,7 +1363,7 @@ apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/portab
 # Object files for target reaction-tester
 reaction__tester_OBJECTS = \
 "CMakeFiles/reaction-tester.dir/main.c.o" \
-"CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o" \
+"CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o" \
 "CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o" \
 "CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o" \
 "CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2040/pico_platform/platform.c.o" \
@@ -1460,7 +1460,7 @@ reaction__tester_OBJECTS = \
 reaction__tester_EXTERNAL_OBJECTS =
 
 apps/reaction-tester/reaction-tester.elf: apps/reaction-tester/CMakeFiles/reaction-tester.dir/main.c.o
-apps/reaction-tester/reaction-tester.elf: apps/reaction-tester/CMakeFiles/reaction-tester.dir/clock_gettime_patch.c.o
+apps/reaction-tester/reaction-tester.elf: apps/reaction-tester/CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o
 apps/reaction-tester/reaction-tester.elf: apps/reaction-tester/CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdlib/stdlib.c.o
 apps/reaction-tester/reaction-tester.elf: apps/reaction-tester/CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
 apps/reaction-tester/reaction-tester.elf: apps/reaction-tester/CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2040/pico_platform/platform.c.o

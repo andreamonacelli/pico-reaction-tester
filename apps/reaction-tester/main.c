@@ -1,9 +1,12 @@
 #include "pico/stdlib.h"
+#include "pico/types.h"
 #include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
 #include "task.h"
+#include "timers.h"
 #include "semphr.h"
 #include "unistd.h"
+#include "pico_uart_transports.h"
 
 /* microROS header files */
 #include <rcl/rcl.h>
@@ -29,8 +32,11 @@ uint32_t best_reaction_time = UINT32_MAX; /* This variable represents the best t
 
 /* Concurrency semaphores */
 SemaphoreHandle_t led_semaphore; /* Semaphore that handles the led status' toggle */
+uint32_t led_blocked = 0;
 SemaphoreHandle_t buzzer_semaphore; /* Semaphore that makes the buzzer wait for the click over the button to perform its checks */
+uint32_t buzzer_blocked = 0;
 SemaphoreHandle_t publisher_semaphore; /* Semaphore that makes the publisher wait for the button to be clicked */
+uint32_t publisher_blocked = 0;
 
 /* Task handlers */
 TaskHandle_t ledTaskHandler = NULL;
@@ -55,6 +61,7 @@ void ros_publisher_task(void *pvParameters);
 void micro_ros_task(void *arg);
 void subscription_callback(const void *msgin);
 void button_callback(uint gpio, uint32_t events);
+void sleep_ms_rt(uint32_t ms);
 
 /*
 ---------- FreeRTOS TASKS DEFINITION ----------
@@ -63,16 +70,14 @@ void button_callback(uint gpio, uint32_t events);
 void led_task(void *pvParameters){
     while(1){
         /* Generating the random interval time between 1 and 3 seconds */
-        led_activation_time = (rand() % 3000) + 1000;
-        while(led_activation_time > 0){
-            vTaskDelay(pdMS_TO_TICKS(1));
-            led_activation_time--;
-        }
+        uint32_t led_activation_time = (rand() % 3000) + 1000;
+        sleep_ms_rt(led_activation_time);
         /* Enable the interrupts over the button to detect the future click */
         gpio_set_irq_enabled_with_callback(BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true, &button_callback);
         /* Here the led is turned on and the start time is saved in the respective variable */
         gpio_put(LED_PIN, 1);
         test_start_time = to_us_since_boot(get_absolute_time());
+        led_blocked = 1;
         /* Now wait over the semaphore that the user presses the button */
         xSemaphoreTake(led_semaphore, portMAX_DELAY);
         /* As soon as the button is pressed turn the led off and disable interrupts on the button to avoid detecting other clicks */
@@ -89,18 +94,22 @@ void buzzer_task(void *pvParameters){
         /* Make the buzzer sound for 1,5 seconds */
         for(int i = 0; i < 1500; i++){
             gpio_put(BUZZER_PIN, 1);
-            vTaskDelay(pdMS_TO_TICKS(1));
+            sleep_ms_rt(1);
             gpio_put(BUZZER_PIN, 0);
-            vTaskDelay(pdMS_TO_TICKS(1));
+            sleep_ms_rt(1);
         }
         /* Re-awaken the led task */
-        xSemaphoreGive(led_semaphore);
+        if(led_blocked){
+            led_blocked = 0;
+            xSemaphoreGive(led_semaphore);
+        }
     }
 }
 
 /* Task that handles the publishing over microROS topics of both reaction time and best time */
 void ros_publisher_task(void *pvParameters){
     while(1){
+        publisher_blocked = 1;
         xSemaphoreTake(publisher_semaphore, portMAX_DELAY);
         /* Elaborate the value and send it to the respective microROS topic */
         reaction_time_to_upload.data = reaction_time;
@@ -111,10 +120,16 @@ void ros_publisher_task(void *pvParameters){
             best_reaction_time_to_upload.data = best_reaction_time;
             RCSOFTCHECK(rcl_publish(&best_time_publisher, &best_reaction_time_to_upload, NULL));
             /* Awake the sleeping buzzer that will need to sound */
-            xSemaphoreGive(buzzer_semaphore);
+            if(buzzer_blocked){
+                buzzer_blocked = 0;
+                xSemaphoreGive(buzzer_blocked);
+            }
             /* The re-awakening of the led task will be performed in the buzzer function if it's called or in this task otherwise */
         } else{
-            xSemaphoreGive(led_semaphore);
+            if(led_blocked){
+                led_blocked = 0;
+                xSemaphoreGive(led_semaphore);
+            }
         }
     }
 }
@@ -171,7 +186,7 @@ void micro_ros_task(void *arg){
 
     while(1){
 		rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
-        vTaskDelay(pdMS_TO_TICKS(10));
+        sleep_ms_rt(10);
 	}
 
     /* Free-ing resources after execution */
@@ -200,10 +215,23 @@ void button_callback(uint gpio, uint32_t events){
         uint32_t click_time = to_us_since_boot(get_absolute_time());
         reaction_time = click_time - test_start_time;
         /* Unlock the microROS publisher task (which will eventually unlock the led task) */
-        xSemaphoreGive(publisher_semaphore);
+        if(publisher_blocked){
+            publisher_blocked = 0;
+            xSemaphoreGive(publisher_semaphore);
+        }
     }
 }
 
+/*
+---------- Auxiliary functions ----------
+*/
+void sleep_ms_rt(uint32_t ms) {
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+        vTaskDelay(pdMS_TO_TICKS(ms));
+    } else {
+        sleep_ms(ms);
+    }
+}
 
 /*
 ---------- MAIN ----------
@@ -224,7 +252,7 @@ void main(void){
     /* Initializing the buzzer (which, like the led, will initially be off) */
     gpio_init(BUZZER_PIN);
     gpio_set_dir(BUZZER_PIN, GPIO_OUT);
-    gpio_put(BUZZER_PIN, 0);
+    gpio_put(BUZZER_PIN, 1);
 
     /* Initializing the semaphores (ensuring they will be set to 0 so that they will block the task until further notice) */
     led_semaphore = xSemaphoreCreateBinary();
@@ -233,6 +261,15 @@ void main(void){
     xSemaphoreTake(buzzer_semaphore, portMAX_DELAY);
     publisher_semaphore = xSemaphoreCreateBinary();
     xSemaphoreTake(publisher_semaphore, portMAX_DELAY);
+
+    rmw_uros_set_custom_transport(
+		true,
+		NULL,
+		pico_serial_transport_open,
+		pico_serial_transport_close,
+		pico_serial_transport_write,
+		pico_serial_transport_read
+	);
 
     /* FreeRTOS tasks creation */
     xTaskCreate(led_task, "LED Task", 256, NULL, 1, &ledTaskHandler);

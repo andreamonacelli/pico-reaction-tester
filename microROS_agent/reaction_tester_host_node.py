@@ -14,7 +14,7 @@ class ReactionTesterHostNode(Node):
         self.subscriber = self.create_subscription(
             Int32,
             'reaction_time',
-            self.reaction_time_callback,
+            self.reaction_time_received_callback,
             10
         )
 
