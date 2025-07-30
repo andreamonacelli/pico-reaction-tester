@@ -3,6 +3,8 @@ add_executable(reaction-tester
     main.c
 )
 
+add_definitions(-DRCUTILS_NO_CLOCK_GETTIME)
+
 # Link against Pico, FreeRTOS, microros
 target_link_libraries(reaction-tester
     pico_stdlib
