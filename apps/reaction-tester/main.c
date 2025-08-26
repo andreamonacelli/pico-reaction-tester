@@ -49,6 +49,10 @@ rclc_executor_t executor;
 std_msgs__msg__Int32 reaction_time_to_upload; /* This will hold the reaction time measured each time */
 std_msgs__msg__Int32 best_reaction_time_to_upload; /* This will hold the best reaction time measured if beaten */
 
+/* Constants and variables to manage button debouncing */
+static uint32_t last_pressed_time = 0;
+#define DEBOUNCE_DELAY 200 /* Statically defined debouncing delay in milliseconds */
+
 /*
 ---------- Function Prototypes ----------
 */
@@ -73,7 +77,6 @@ void led_task(void *pvParameters){
         sleep_ms_rt(led_activation_time);
         /* Here the led is turned on and the start time is saved in the respective variable */
         gpio_put(LED_PIN, 1);
-        gpio_put(PICO_DEFAULT_LED_PIN, 0); // DEBUG
         test_start_time = to_us_since_boot(get_absolute_time());
         /* Enable the interrupts over the button to detect the future click */
         gpio_set_irq_enabled(BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true);
@@ -174,15 +177,20 @@ void micro_ros_task(void *arg){
 /* Callback function that manages the click over the button */
 void button_callback(uint gpio, uint32_t events){
     if(gpio == BUTTON_PIN && (events & GPIO_IRQ_EDGE_FALL)){
-        /* Fetch the time of click and use it to calculate reaction time */
-        uint32_t click_time = to_us_since_boot(get_absolute_time());
-        reaction_time = click_time - test_start_time;
-        /* As soon as the button is pressed turn the led off and disable interrupts on the button to avoid detecting other clicks */
-        gpio_put(LED_PIN, 0);
-        /* Unlock the microROS publisher task (which will eventually unlock the led task) */
-        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-        xSemaphoreGiveFromISR(publisher_semaphore, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        /* Manage debouncing */
+        uint32_t press_time = to_ms_since_boot(get_absolute_time());
+        if((press_time - last_pressed_time) > DEBOUNCE_DELAY){
+            last_pressed_time = press_time;
+            /* Fetch the time of click and use it to calculate reaction time */
+            uint32_t click_time = to_us_since_boot(get_absolute_time());
+            reaction_time = click_time - test_start_time;
+            /* As soon as the button is pressed turn the led off and disable interrupts on the button to avoid detecting other clicks */
+            gpio_put(LED_PIN, 0);
+            /* Unlock the microROS publisher task (which will eventually unlock the led task) */
+            BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+            xSemaphoreGiveFromISR(publisher_semaphore, &xHigherPriorityTaskWoken);
+            portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        }
     }
 }
 
