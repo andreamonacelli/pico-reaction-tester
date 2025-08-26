@@ -33,11 +33,8 @@ uint32_t best_reaction_time = UINT32_MAX; /* This variable represents the best t
 
 /* Concurrency semaphores */
 SemaphoreHandle_t led_semaphore; /* Semaphore that handles the led status' toggle */
-uint32_t led_blocked = 0;
 SemaphoreHandle_t buzzer_semaphore; /* Semaphore that makes the buzzer wait for the click over the button to perform its checks */
-uint32_t buzzer_blocked = 1;
 SemaphoreHandle_t publisher_semaphore; /* Semaphore that makes the publisher wait for the button to be clicked */
-uint32_t publisher_blocked = 1;
 
 /* Task handlers */
 TaskHandle_t ledTaskHandler = NULL;
@@ -48,10 +45,9 @@ TaskHandle_t rosSubTaskHandler = NULL;
 /* microROS entities and message formats */
 rcl_publisher_t time_publisher;
 rcl_publisher_t best_time_publisher;
-rcl_subscription_t subscriber;
+rclc_executor_t executor;
 std_msgs__msg__Int32 reaction_time_to_upload; /* This will hold the reaction time measured each time */
 std_msgs__msg__Int32 best_reaction_time_to_upload; /* This will hold the best reaction time measured if beaten */
-std_msgs__msg__Int32 best_reaction_time_to_read; /* This will hold the best reaction time to be read from microROS */
 
 /*
 ---------- Function Prototypes ----------
@@ -60,7 +56,6 @@ void led_task(void *pvParameters);
 void buzzer_task(void *pvParameters);
 void ros_publisher_task(void *pvParameters);
 void micro_ros_task(void *arg);
-void subscription_callback(const void *msgin);
 void button_callback(uint gpio, uint32_t events);
 void sleep_ms_rt(uint32_t ms);
 void play_buzzer(uint duration);
@@ -78,6 +73,7 @@ void led_task(void *pvParameters){
         sleep_ms_rt(led_activation_time);
         /* Here the led is turned on and the start time is saved in the respective variable */
         gpio_put(LED_PIN, 1);
+        gpio_put(PICO_DEFAULT_LED_PIN, 0); // DEBUG
         test_start_time = to_us_since_boot(get_absolute_time());
         /* Enable the interrupts over the button to detect the future click */
         gpio_set_irq_enabled(BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true);
@@ -137,14 +133,6 @@ void micro_ros_task(void *arg){
     rcl_node_t node;
     RCCHECK(rclc_node_init_default(&node, "reaction_tester_node", "", &support));
 
-    /* Create subscriber */
-    RCCHECK(rclc_subscription_init_default(
-        &subscriber,
-        &node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
-        "best_reaction_time"
-    ));
-
     /* Create reaction time publisher */
     RCCHECK(rclc_publisher_init_default(
         &time_publisher,
@@ -162,9 +150,7 @@ void micro_ros_task(void *arg){
     ));
 
     /* Create executor */
-    rclc_executor_t executor;
     RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
-    RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &best_reaction_time_to_read, &subscription_callback, ON_NEW_DATA));
 
     /* Initialize published message (check if it's actually needed) */
     reaction_time_to_upload.data = 0;
@@ -175,7 +161,6 @@ void micro_ros_task(void *arg){
 	}
 
     /* Free-ing resources after execution */
-    RCCHECK(rcl_subscription_fini(&subscriber, &node));
     RCCHECK(rcl_publisher_fini(&time_publisher, &node));
     RCCHECK(rcl_publisher_fini(&best_time_publisher, &node));
     RCCHECK(rcl_node_fini(&node));
@@ -183,15 +168,8 @@ void micro_ros_task(void *arg){
 }
 
 /*
----------- Callback functions definition ----------
+---------- Callback function definition ----------
 */
-
-/* Task that handles the readings from the "best times" microROS topic */
-void subscription_callback(const void *msgin){ 
-    const std_msgs__msg__Int32 *msg = (const std_msgs__msg__Int32 *)msgin;
-    best_reaction_time = msg->data;
-}
-
 
 /* Callback function that manages the click over the button */
 void button_callback(uint gpio, uint32_t events){

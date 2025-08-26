@@ -19,9 +19,10 @@ class ReactionTesterHostNode(Node):
         )
 
         #Defining the publisher that will send the best time currently recorded
-        self.publisher = self.create_publisher(
+        self.best_time_subscriber = self.create_subscription(
             Int32,
             'best_reaction_time',
+            self.best_time_received_callback,
             10
         )
 
@@ -31,15 +32,12 @@ class ReactionTesterHostNode(Node):
     def reaction_time_received_callback(self, msg):
         current_time = msg.data
         message_timestamp = datetime.datetime.now()
-        self.get_logger().info(f'{message_timestamp} - reaction time received: {current_time} ms')
+        self.get_logger().info(f'{message_timestamp} - reaction time received: {current_time / 1000} ms')
 
-        # Check if the current time is better than the best time recorded (or is the first time recorded)
-        if self.best_time is None or current_time < self.best_time:
-            self.best_time = current_time
-            self.get_logger().info(f'NEW RECORD at {message_timestamp}: {self.best_time} ms')
-            best_time_msg = Int32()
-            best_time_msg.data = self.best_time
-            self.publisher.publish(best_time_msg)
+    def best_time_received_callback(self, msg):
+        self.best_time = msg.data
+        message_timestamp = datetime.datetime.now()
+        self.get_logger().info(f'NEW RECORD at {message_timestamp}: {self.best_time / 1000} ms')
 
 # Main function
 if __name__ == '__main__':
