@@ -1,104 +1,122 @@
-![banner](.images/banner-dark-theme.png#gh-dark-mode-only)
-![banner](.images/banner-light-theme.png#gh-light-mode-only)
+# &#128064; Reaction-Tester project on Raspberry Pi Pico &#128341;
 
-# micro-ROS module for Raspberry Pi Pico SDK
-
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+Course project for Real-Time Embedded Systems university course which leverages concepts such as concurrency and inter-process(/thread) communication (in this specific case performed in message-passing fashion).   
+The project aims to be a fun mini-game to test the user's reaction time from the moment the led turns on. If the user beats the best time (within the current session) the buzzer will make a sound to notify that a new time record has been set!
 
 ## Getting Started
 
-Here is a quick way to compile the example given in this repository.
+Here is a quick guide to compile and execute the project presented in this repository.
 
-### Dependencies
+### Circuit schema
 
-micro-ROS precompiled library is compiled using `arm-none-eabi-gcc` [9.3.1](https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2), a compatible version is expected when building the micro-ROS project.
-You can specify a compiler path with the following command:
+Given the needed hardware (Raspberry Pi Pico microcontroller, a led, a 220Ω resistor, a passive buzzer, a button, 6 wires and a breadboard), here's a diagram showing how to connect the components in order to make them work properly
+
+![image info](assets/image.png)
+
+Once the wirings are all set it is possible to connect the Raspberry Pi Pico to your PC and follow the next steps of the guide to launch the project
+
+### Downloading the project
+
+The first step needed is the download of the project from this repository, which can be eaily done by opening a terminal (preferably Linux-based) and executing the series of commands below:
+```bash
+# Move to your desired folder
+git clone https://github.com/andreamonacelli/pico-reaction-tester
+```
+
+The project is now downloaded in *\<your-folder-name\>/pico-reaction-tester*
+
+### Cloning and binding the Pico SDK
+
+In order to launch a project on a Raspberry Pi Pico you need to clone the Pico SDK and bind it to a specific environment variable
 
 ```bash
-# Configure environment
-echo "export PICO_TOOLCHAIN_PATH=..." >> ~/.bashrc
-source ~/.bashrc
+# Installing the toolchain
+sudo apt install cmake python3 build-essential gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
+
+# Clone the SDK repository
+git clone https://github.com/raspberrypi/pico-sdk
+
+# To bind permanently the PICO_SDK_PATH environment variable
+echo “export PICO_SDK_PATH={path-to}/pico-sdk” >> ~/.bashrc
+# Or else EACH TIME that the PC/VM/WSL is turned on
+export PICO_SDK_PATH={path-to}/pico-sdk
 ```
 
-### 1. Install Pico SDK
-First, make sure the Pico SDK is properly installed and configured:
+### ROS2 Installation (needed to install and configure microROS and also for the Python logger)
+
+Moving on, we need to install ROS2 in order to be able to let the Pico communicate the results to the host (which will correspond to the user's PC).   
+The installation can be easily done by following the official guide [here](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html) for ROS and [here]() for microROS, however I will report the commands in this quick-start guide as well
+```bash
+# First of all make sure that your system has a locale that supports UTF-8 (refer to official guide to see how to perform this check)
+
+# Enable required repositories
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+# Install the ros2-apt-source to configure ROS2 repositories
+sudo apt update && sudo apt install curl -y
+export ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F\" '{print $4}')
+curl -L -o /tmp/ros2-apt-source.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo $VERSION_CODENAME)_all.deb" # If using Ubuntu derivates use $UBUNTU_CODENAME
+sudo dpkg -i /tmp/ros2-apt-source.deb
+
+# Update apt repository caches
+sudo apt update
+sudo apt upgrade
+
+# Actual installation of ROS2
+sudo apt install ros-jazzy-desktop
+```
+
+### microROS installation and configuration
+
+Once ROS2 is correctly installed, we can move forward with the installation of microROS, which can be performed by executing the following commands
 
 ```bash
-# Install dependencies
-sudo apt install cmake g++ gcc-arm-none-eabi doxygen libnewlib-arm-none-eabi git python3
-git clone --recurse-submodules https://github.com/raspberrypi/pico-sdk.git $HOME/pico-sdk
+# Create a workspace and download the micro-ROS tools
+mkdir microros_ws
+cd microros_ws
+git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
 
-# Configure environment
-echo "export PICO_SDK_PATH=$HOME/pico-sdk" >> ~/.bashrc
-source ~/.bashrc
+sudo apt update
+sudo apt upgrade
+
+# Update dependencies using rosdep
+sudo apt-get install python3-rosdep
+sudo rosdep init
+sudo apt update && rosdep update
+rosdep install --from-paths src --ignore-src -y
+
+# Install pip
+sudo apt-get install python3-pip
+
+# Build micro-ROS tools and source them
+sudo apt install colcon
+colcon build
+source install/local_setup.bash
 ```
 
-### 2. Compile Example
+### Launch the project
 
-Once the Pico SDK is ready, compile the example:
+To launch the project you need to execute the following commands
 
 ```bash
-cd micro_ros_raspberrypi_pico_sdk
-mkdir build
-cd build
-cmake ..
-make
+# ---- ONLY ON HOST-STARTUP ----
+# Setup ROS2 Environment (needed mainly for the Python logger)
+source /opt/ros/jazzy/setup.bash
+
+# ---- ONLY ON HOST-STARTUP ----
+# Build microROS
+source {path-to-microros_workspace}/install/local_setup.bash
+
+# Build the microROS agent
+ros2 run micro_ros_setup build_agent.sh # To be executed in microros_workspace folder
+
+# After connecting the Pico to the PC execute the following line only if you're working in a WSL in the Windows terminal
+usbipd attach -a --wsl --busid {busid}
+
+#Once the interface is bound execute the microROS agent and launch the program on Pico
+sudo ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
+
+#(Optional) launch the Python logger
+python3 ROS2_logger/reaction_tester_host_node.py
 ```
-
-To flash, hold the boot button, plug the USB and run:
-```
-cp pico_micro_ros_example.uf2 /media/$USER/RPI-RP2
-```
-
-### 3. Start Micro-ROS Agent
-Micro-ROS follows the client-server architecture, so you need to start the Micro-ROS Agent.
-You can do so using the [micro-ros-agent Snap](https://snapcraft.io/micro-ros-agent) (follow the link for installation details):
-
-```bash
-micro-ros-agent serial --dev /dev/ttyACM0 -b 115200
-```
-
-or using the [micro-ros-agent Docker](https://hub.docker.com/r/microros/micro-ros-agent):
-```bash
-docker run -it --rm -v /dev:/dev --privileged --net=host microros/micro-ros-agent:jazzy serial --dev /dev/ttyACM0 -b 115200
-```
-
-## What files are relevant?
-- `pico_uart_transport.c`: Contains the board specific implementation of the serial transport (no change needed).
-- `CMakeLists.txt`: CMake file.
-- `pico_micro_ros_example.c`: The actual ROS 2 publisher.
-
-## How to build the precompiled library
-
-Micro-ROS is precompiled for Raspberry Pi Pico in [`libmicroros`](libmicroros).
-If you want to compile it by yourself:
-
-```bash
-docker pull microros/micro_ros_static_library_builder:jazzy
-docker run -it --rm -v $(pwd):/project microros/micro_ros_static_library_builder:jazzy
-```
-
-Note that folders added to `microros_static_library/library_generation/extra_packages` and entries added to `microros_static_library/library_generation/extra_packages/extra_packages.repos` will be taken into account by this build system.
-## How to use Pico SDK?
-
-Here is a Raspberry Pi Pico C/C++ SDK documentation:
-https://datasheets.raspberrypi.org/pico/raspberry-pi-pico-c-sdk.pdf
-## Purpose of the Project
-
-This software is not ready for production use. It has neither been developed nor
-tested for a specific use case. However, the license conditions of the
-applicable Open Source licenses allow you to adapt the software to your needs.
-Before using it in a safety relevant setting, make sure that the software
-fulfills your requirements and adjust it according to any applicable safety
-standards, e.g., ISO 26262.
-
-## License
-
-This repository is open-sourced under the Apache-2.0 license. See the [LICENSE](LICENSE) file for details.
-
-For a list of other open-source components included in this repository,
-see the file [3rd-party-licenses.txt](3rd-party-licenses.txt).
-
-## Known Issues/Limitations
-
-There are no known limitations.
