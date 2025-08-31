@@ -7,7 +7,7 @@ The project aims to be a fun mini-game to test the user's reaction time from the
 
 Here is a quick guide to compile and execute the project presented in this repository.
 
-### Circuit schema
+### &#9889; Circuit schema
 
 Given the needed hardware (Raspberry Pi Pico microcontroller, a led, a 220Ω resistor, a passive buzzer, a button, 6 wires and a breadboard), here's a diagram showing how to connect the components in order to make them work properly
 
@@ -15,7 +15,7 @@ Given the needed hardware (Raspberry Pi Pico microcontroller, a led, a 220Ω res
 
 Once the wirings are all set it is possible to connect the Raspberry Pi Pico to your PC and follow the next steps of the guide to launch the project
 
-### Downloading the project
+### &#128317; Downloading the project
 
 The first step needed is the download of the project from this repository, which can be eaily done by opening a terminal (preferably Linux-based) and executing the series of commands below:
 ```bash
@@ -95,7 +95,7 @@ colcon build
 source install/local_setup.bash
 ```
 
-### Launch the project
+### &#128640; Launch the project
 
 To launch the project you need to execute the following commands
 
