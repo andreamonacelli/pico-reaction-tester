@@ -49,11 +49,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  22 .debug_line   0003ebd6  00000000  00000000  000c55d0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 23 .debug_str    0000f424  00000000  00000000  001041a6  2**0
+ 23 .debug_str    0000f428  00000000  00000000  001041a6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 24 .debug_frame  00005500  00000000  00000000  001135cc  2**2
+ 24 .debug_frame  00005500  00000000  00000000  001135d0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 25 .debug_line_str 00000399  00000000  00000000  00118acc  2**0
+ 25 .debug_line_str 00000399  00000000  00000000  00118ad0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 /home/andrea/pico/pico-reaction-tester/build/apps/reaction-tester/reaction-tester.elf:     file format elf32-littlearm
@@ -848,7 +848,7 @@ Disassembly of section .text:
 100007a4:	10000825 	.word	0x10000825
 100007a8:	10000829 	.word	0x10000829
 100007ac:	10000809 	.word	0x10000809
-100007b0:	20007798 	.word	0x20007798
+100007b0:	2000779c 	.word	0x2000779c
 100007b4:	10019e94 	.word	0x10019e94
 100007b8:	10000321 	.word	0x10000321
 100007bc:	20007474 	.word	0x20007474
@@ -857,7 +857,7 @@ Disassembly of section .text:
 100007c8:	20006bac 	.word	0x20006bac
 100007cc:	10019eb0 	.word	0x10019eb0
 100007d0:	10000575 	.word	0x10000575
-100007d4:	2000779c 	.word	0x2000779c
+100007d4:	20007798 	.word	0x20007798
 100007d8:	10019ebc 	.word	0x10019ebc
 100007dc:	10000469 	.word	0x10000469
 

@@ -8572,12 +8572,12 @@ LOAD /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  .bss.rmw_uxrce_transport_default_params
                 0x2000777c       0x1c /home/andrea/pico/pico-reaction-tester/libmicroros/libmicroros.a(librmw_microxrcedds-custom_transport.c.obj)
                 0x2000777c                rmw_uxrce_transport_default_params
- .bss.rosPubTaskHandler
+ .bss.rosInitializerHandler
                 0x20007798        0x4 CMakeFiles/reaction-tester.dir/main.c.o
-                0x20007798                rosPubTaskHandler
- .bss.rosSubTaskHandler
+                0x20007798                rosInitializerHandler
+ .bss.rosPubTaskHandler
                 0x2000779c        0x4 CMakeFiles/reaction-tester.dir/main.c.o
-                0x2000779c                rosSubTaskHandler
+                0x2000779c                rosPubTaskHandler
  .bss.service_memory
                 0x200077a0       0x10 /home/andrea/pico/pico-reaction-tester/libmicroros/libmicroros.a(librmw_microxrcedds-types.c.obj)
                 0x200077a0                service_memory
@@ -10352,107 +10352,107 @@ LOAD linker stubs
  .debug_line    0x0003e7f5      0x163 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-__atexit.o)
  .debug_line    0x0003e958      0x27e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-__call_atexit.o)
 
-.debug_str      0x00000000     0xf424
- .debug_str     0x00000000     0xf424 CMakeFiles/reaction-tester.dir/main.c.o
-                               0x2c95 (size before relaxing)
- .debug_str     0x0000f424      0x82f CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o
- .debug_str     0x0000f424      0xc6d CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
- .debug_str     0x0000f424      0x208 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2040/pico_platform/platform.c.o
- .debug_str     0x0000f424      0x224 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
- .debug_str     0x0000f424      0x392 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/hardware_claim/claim.c.o
- .debug_str     0x0000f424      0x33b CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
- .debug_str     0x0000f424      0x258 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
- .debug_str     0x0000f424      0xa58 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
- .debug_str     0x0000f424      0x224 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_sync/lock_core.c.o
- .debug_str     0x0000f424      0x7e5 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_sync/mutex.c.o
- .debug_str     0x0000f424      0x2e4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_sync/critical_section.c.o
- .debug_str     0x0000f424     0x11b4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_time/time.c.o
- .debug_str     0x0000f424      0x9d4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
- .debug_str     0x0000f424      0x988 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
- .debug_str     0x0000f424      0x46b CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o
- .debug_str     0x0000f424      0x3a2 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
- .debug_str     0x0000f424      0x29a CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o
- .debug_str     0x0000f424      0x354 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o
- .debug_str     0x0000f424      0x24f CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o
- .debug_str     0x0000f424      0x2aa CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
- .debug_str     0x0000f424      0x793 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
- .debug_str     0x0000f424      0x4a7 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o
- .debug_str     0x0000f424       0x95 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o
- .debug_str     0x0000f424       0x98 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_divider/divider_hardware.S.o
- .debug_str     0x0000f424       0x9a CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_rp2040.S.o
- .debug_str     0x0000f424      0x2c5 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom_rp2040.c.o
- .debug_str     0x0000f424       0xa0 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim_rp2040.S.o
- .debug_str     0x0000f424       0x9e CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.o
- .debug_str     0x0000f424       0x98 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi_rp2040.S.o
- .debug_str     0x0000f424      0x2aa CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom_rp2040.c.o
- .debug_str     0x0000f424       0x9e CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim_rp2040.S.o
- .debug_str     0x0000f424      0x41d CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
- .debug_str     0x0000f424       0x95 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.o
- .debug_str     0x0000f424      0x6ef CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o
- .debug_str     0x0000f424      0x3fa CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
- .debug_str     0x0000f424      0x4e2 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
- .debug_str     0x0000f424       0x89 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
- .debug_str     0x0000f424      0x744 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
- .debug_str     0x0000f424      0xa97 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
- .debug_str     0x0000f424      0xdf2 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
- .debug_str     0x0000f424      0xe9a CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
- .debug_str     0x0000f424      0xfab CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
- .debug_str     0x0000f424      0x28b CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
- .debug_str     0x0000f424      0x6b8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o
- .debug_str     0x0000f424     0x11e4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
- .debug_str     0x0000f424      0x9e8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
- .debug_str     0x0000f424     0x1b1f CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
- .debug_str     0x0000f424      0x698 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
- .debug_str     0x0000f424     0x171e CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
- .debug_str     0x0000f424      0xde8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
- .debug_str     0x0000f424      0xdd0 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
- .debug_str     0x0000f424      0x624 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o
- .debug_str     0x0000f424      0xede CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/port.c.o
- .debug_str     0x0000f424      0x82f CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/event_groups.c.o
- .debug_str     0x0000f424      0x2ff CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/list.c.o
- .debug_str     0x0000f424      0xe78 CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/queue.c.o
- .debug_str     0x0000f424     0x1a6b CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/tasks.c.o
- .debug_str     0x0000f424      0xd0a CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/timers.c.o
- .debug_str     0x0000f424      0x4a8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_exception/exception.c.o
- .debug_str     0x0000f424      0xcba CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
- .debug_str     0x0000f424      0x57d CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/portable/MemMang/heap_4.c.o
- .debug_str     0x0000f424       0xbf /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
- .debug_str     0x0000f424      0x1b7 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strncpy.o)
- .debug_str     0x0000f424      0x4b5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-rand.o)
- .debug_str     0x0000f424      0x4bb /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-getenv.o)
- .debug_str     0x0000f424      0x1b1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-memchr-stub.o)
- .debug_str     0x0000f424      0x198 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strchr.o)
- .debug_str     0x0000f424       0xa3 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strcmp.o)
- .debug_str     0x0000f424      0x2a6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strstr.o)
- .debug_str     0x0000f424      0x73d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strtoul.o)
- .debug_str     0x0000f424      0x18f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strncmp.o)
- .debug_str     0x0000f424      0x1c0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-memmove.o)
- .debug_str     0x0000f424      0x4b1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-calloc.o)
- .debug_str     0x0000f424      0x49a /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-errno.o)
- .debug_str     0x0000f424      0x4a5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-impure.o)
- .debug_str     0x0000f424      0x4f2 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-callocr.o)
- .debug_str     0x0000f424      0x4b6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-realloc.o)
- .debug_str     0x0000f424      0x6c8 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-mallocr.o)
- .debug_str     0x0000f424      0x61e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-freer.o)
- .debug_str     0x0000f424      0x18d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-memcmp.o)
- .debug_str     0x0000f424      0x4c5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-malloc.o)
- .debug_str     0x0000f424      0x196 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-sysconf.o)
- .debug_str     0x0000f424      0x4ee /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-getenv_r.o)
- .debug_str     0x0000f424      0x593 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-reallocr.o)
- .debug_str     0x0000f424      0x4be /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-mlock.o)
- .debug_str     0x0000f424      0x6a8 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-findfp.o)
- .debug_str     0x0000f424      0x186 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-ctype_.o)
- .debug_str     0x0000f424      0x1ca /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-atexit.o)
- .debug_str     0x0000f424      0x195 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strnlen.o)
- .debug_str     0x0000f424      0x1aa /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strlen-stub.o)
- .debug_str     0x0000f424      0x4a9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-sbrkr.o)
- .debug_str     0x0000f424      0x18b /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strcpy.o)
- .debug_str     0x0000f424      0x1c4 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-fini.o)
- .debug_str     0x0000f424      0x4b7 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-envlock.o)
- .debug_str     0x0000f424      0x111 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-environ.o)
- .debug_str     0x0000f424      0x4bf /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-reent.o)
- .debug_str     0x0000f424      0x235 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-__atexit.o)
- .debug_str     0x0000f424      0x257 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-__call_atexit.o)
+.debug_str      0x00000000     0xf428
+ .debug_str     0x00000000     0xf428 CMakeFiles/reaction-tester.dir/main.c.o
+                               0x2c99 (size before relaxing)
+ .debug_str     0x0000f428      0x82f CMakeFiles/reaction-tester.dir/__/__/pico_uart_transport.c.o
+ .debug_str     0x0000f428      0xc6d CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.o
+ .debug_str     0x0000f428      0x208 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2040/pico_platform/platform.c.o
+ .debug_str     0x0000f428      0x224 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_platform_panic/panic.c.o
+ .debug_str     0x0000f428      0x392 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/hardware_claim/claim.c.o
+ .debug_str     0x0000f428      0x33b CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_sync/sync.c.o
+ .debug_str     0x0000f428      0x258 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.o
+ .debug_str     0x0000f428      0xa58 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_irq/irq.c.o
+ .debug_str     0x0000f428      0x224 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_sync/lock_core.c.o
+ .debug_str     0x0000f428      0x7e5 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_sync/mutex.c.o
+ .debug_str     0x0000f428      0x2e4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_sync/critical_section.c.o
+ .debug_str     0x0000f428     0x11b4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/common/pico_time/time.c.o
+ .debug_str     0x0000f428      0x9d4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_timer/timer.c.o
+ .debug_str     0x0000f428      0x988 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.o
+ .debug_str     0x0000f428      0x46b CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_pll/pll.c.o
+ .debug_str     0x0000f428      0x3a2 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.o
+ .debug_str     0x0000f428      0x29a CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_ticks/ticks.c.o
+ .debug_str     0x0000f428      0x354 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.o
+ .debug_str     0x0000f428      0x24f CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.o
+ .debug_str     0x0000f428      0x2aa CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_runtime/runtime.c.o
+ .debug_str     0x0000f428      0x793 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init.c.o
+ .debug_str     0x0000f428      0x4a7 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_runtime_init/runtime_init_clocks.c.o
+ .debug_str     0x0000f428       0x95 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.o
+ .debug_str     0x0000f428       0x98 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_divider/divider_hardware.S.o
+ .debug_str     0x0000f428       0x9a CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_double/double_aeabi_rp2040.S.o
+ .debug_str     0x0000f428      0x2c5 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_double/double_init_rom_rp2040.c.o
+ .debug_str     0x0000f428       0xa0 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim_rp2040.S.o
+ .debug_str     0x0000f428       0x9e CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.o
+ .debug_str     0x0000f428       0x98 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_float/float_aeabi_rp2040.S.o
+ .debug_str     0x0000f428      0x2aa CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_float/float_init_rom_rp2040.c.o
+ .debug_str     0x0000f428       0x9e CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_float/float_v1_rom_shim_rp2040.S.o
+ .debug_str     0x0000f428      0x41d CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_malloc/malloc.c.o
+ .debug_str     0x0000f428       0x95 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.o
+ .debug_str     0x0000f428      0x6ef CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_atomic/atomic.c.o
+ .debug_str     0x0000f428      0x3fa CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.o
+ .debug_str     0x0000f428      0x4e2 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_printf/printf.c.o
+ .debug_str     0x0000f428       0x89 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_crt0/crt0.S.o
+ .debug_str     0x0000f428      0x744 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_clib_interface/newlib_interface.c.o
+ .debug_str     0x0000f428      0xa97 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio/stdio.c.o
+ .debug_str     0x0000f428      0xdf2 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.o
+ .debug_str     0x0000f428      0xe9a CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.o
+ .debug_str     0x0000f428      0xfab CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.o
+ .debug_str     0x0000f428      0x28b CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.o
+ .debug_str     0x0000f428      0x6b8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.o
+ .debug_str     0x0000f428     0x11e4 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.o
+ .debug_str     0x0000f428      0x9e8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.o
+ .debug_str     0x0000f428     0x1b1f CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/device/usbd.c.o
+ .debug_str     0x0000f428      0x698 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/device/usbd_control.c.o
+ .debug_str     0x0000f428     0x171e CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.o
+ .debug_str     0x0000f428      0xde8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.o
+ .debug_str     0x0000f428      0xdd0 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/tusb.c.o
+ .debug_str     0x0000f428      0x624 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.o
+ .debug_str     0x0000f428      0xede CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/port.c.o
+ .debug_str     0x0000f428      0x82f CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/event_groups.c.o
+ .debug_str     0x0000f428      0x2ff CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/list.c.o
+ .debug_str     0x0000f428      0xe78 CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/queue.c.o
+ .debug_str     0x0000f428     0x1a6b CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/tasks.c.o
+ .debug_str     0x0000f428      0xd0a CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/timers.c.o
+ .debug_str     0x0000f428      0x4a8 CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/hardware_exception/exception.c.o
+ .debug_str     0x0000f428      0xcba CMakeFiles/reaction-tester.dir/home/andrea/pico/pico-sdk/src/rp2_common/pico_multicore/multicore.c.o
+ .debug_str     0x0000f428      0x57d CMakeFiles/reaction-tester.dir/__/__/FreeRTOS-Kernel/portable/MemMang/heap_4.c.o
+ .debug_str     0x0000f428       0xbf /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x0000f428      0x1b7 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strncpy.o)
+ .debug_str     0x0000f428      0x4b5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-rand.o)
+ .debug_str     0x0000f428      0x4bb /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-getenv.o)
+ .debug_str     0x0000f428      0x1b1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-memchr-stub.o)
+ .debug_str     0x0000f428      0x198 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strchr.o)
+ .debug_str     0x0000f428       0xa3 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strcmp.o)
+ .debug_str     0x0000f428      0x2a6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strstr.o)
+ .debug_str     0x0000f428      0x73d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strtoul.o)
+ .debug_str     0x0000f428      0x18f /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strncmp.o)
+ .debug_str     0x0000f428      0x1c0 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-memmove.o)
+ .debug_str     0x0000f428      0x4b1 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-calloc.o)
+ .debug_str     0x0000f428      0x49a /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-errno.o)
+ .debug_str     0x0000f428      0x4a5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-impure.o)
+ .debug_str     0x0000f428      0x4f2 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-callocr.o)
+ .debug_str     0x0000f428      0x4b6 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-realloc.o)
+ .debug_str     0x0000f428      0x6c8 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-mallocr.o)
+ .debug_str     0x0000f428      0x61e /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-freer.o)
+ .debug_str     0x0000f428      0x18d /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-memcmp.o)
+ .debug_str     0x0000f428      0x4c5 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-malloc.o)
+ .debug_str     0x0000f428      0x196 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-sysconf.o)
+ .debug_str     0x0000f428      0x4ee /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-getenv_r.o)
+ .debug_str     0x0000f428      0x593 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-reallocr.o)
+ .debug_str     0x0000f428      0x4be /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-mlock.o)
+ .debug_str     0x0000f428      0x6a8 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-findfp.o)
+ .debug_str     0x0000f428      0x186 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-ctype_.o)
+ .debug_str     0x0000f428      0x1ca /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-atexit.o)
+ .debug_str     0x0000f428      0x195 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strnlen.o)
+ .debug_str     0x0000f428      0x1aa /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strlen-stub.o)
+ .debug_str     0x0000f428      0x4a9 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-sbrkr.o)
+ .debug_str     0x0000f428      0x18b /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-strcpy.o)
+ .debug_str     0x0000f428      0x1c4 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-fini.o)
+ .debug_str     0x0000f428      0x4b7 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-envlock.o)
+ .debug_str     0x0000f428      0x111 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-environ.o)
+ .debug_str     0x0000f428      0x4bf /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-reent.o)
+ .debug_str     0x0000f428      0x235 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-__atexit.o)
+ .debug_str     0x0000f428      0x257 /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libg.a(libc_a-__call_atexit.o)
 
 .debug_frame    0x00000000     0x5500
  .debug_frame   0x00000000      0x11c CMakeFiles/reaction-tester.dir/main.c.o

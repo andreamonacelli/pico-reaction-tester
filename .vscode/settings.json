@@ -2,6 +2,7 @@
     "files.associations": {
         "error_handling.h": "c",
         "stdlib.h": "c",
-        "pico_uart_transports.h": "c"
+        "pico_uart_transports.h": "c",
+        "custom_transport.h": "c"
     }
 }

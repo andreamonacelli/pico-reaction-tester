@@ -40,7 +40,7 @@ SemaphoreHandle_t publisher_semaphore; /* Semaphore that makes the publisher wai
 TaskHandle_t ledTaskHandler = NULL;
 TaskHandle_t buzzerTaskHandler = NULL;
 TaskHandle_t rosPubTaskHandler = NULL;
-TaskHandle_t rosSubTaskHandler = NULL;
+TaskHandle_t rosInitializerHandler = NULL;
 
 /* microROS entities and message formats */
 rcl_publisher_t time_publisher;
@@ -265,7 +265,7 @@ void main(void){
     xTaskCreate(ros_publisher_task, "ROS Pub Task", 512, NULL, 2, &rosPubTaskHandler);
     xTaskCreate(led_task, "LED Task", 512, NULL, 1, &ledTaskHandler);
     xTaskCreate(buzzer_task, "Buzzer Task", 512, NULL, 1, &buzzerTaskHandler);
-    xTaskCreate(micro_ros_task, "microROS Task", 8192, NULL, 1, &rosSubTaskHandler);
+    xTaskCreate(micro_ros_task, "microROS Task", 8192, NULL, 1, &rosInitializerHandler);
     
     vTaskStartScheduler();
     while(1){}
