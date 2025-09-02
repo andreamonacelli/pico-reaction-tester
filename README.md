@@ -1,6 +1,6 @@
 # &#128064; Reaction-Tester project on Raspberry Pi Pico &#128341;
 
-Course project for Real-Time Embedded Systems university course which leverages concepts such as concurrency and inter-process(/thread) communication (in this specific case performed in message-passing fashion).   
+Course project for Real-Time Embedded Systems university course which leverages concepts such as concurrency and inter-process(/thread) communication.   
 The project aims to be a fun mini-game to test the user's reaction time from the moment the led turns on. If the user beats the best time (within the current session) the buzzer will make a sound to notify that a new time record has been set!
 
 ## Getting Started
