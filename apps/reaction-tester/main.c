@@ -241,10 +241,6 @@ void main(void){
     /* Initializing the buzzer (which, like the led, will initially be off) */
     pwm_buzzer_init();
 
-    /* Initializing the debug led (the bootsel default led) */
-    gpio_init(PICO_DEFAULT_LED_PIN);
-    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
-
     /* Initializing the semaphores (ensuring they will be set to 0 so that they will block the task until further notice) */
     led_semaphore = xSemaphoreCreateBinary();
     buzzer_semaphore = xSemaphoreCreateBinary();
